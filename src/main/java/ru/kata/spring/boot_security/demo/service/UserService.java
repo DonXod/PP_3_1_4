@@ -12,6 +12,6 @@ public interface UserService {
     void cleanUsersTable();
     void updateUser(User user);
     User getUserById(long id);
-    User getUserByUsername(String username);
+    User getUserByEmail(String username);
 
 }

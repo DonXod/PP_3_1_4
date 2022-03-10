@@ -24,8 +24,8 @@ public class StartDataBase {
     private void initDB() {
         Role roleUser = new Role("ROLE_USER");
         Role roleAdmin = new Role("ROLE_ADMIN");
-        User user = new User("alex","root","Alexey", "Naumov");
-        User admin = new User("admin","root","admin", "adminovich");
+        User user = new User("alex@mail.ru","root","Alexey", "Naumov", (byte) 22);
+        User admin = new User("admin@mail.ru","root","admin", "adminovich", (byte) 99);
         roleService.addRole(roleUser);
         roleService.addRole(roleAdmin);
         Set<Role> temp = new HashSet<>();

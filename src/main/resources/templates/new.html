@@ -8,14 +8,14 @@
 <a href="/admin/users">Return main page</a>
 <br>
 <form th:method="POST" th:action="@{/admin/users}" th:object="${user}">
-    <label for="username">Enter username : </label>
-    <input type="text" th:field="*{username}" id="username"/>
+    <label for="email">Enter email : </label>
+    <input type="text" th:field="*{email}" id="email"/>
     <br>
     <label for="password">Enter password : </label>
     <input type="text" th:field="*{password}" id="password"/>
     <br>
     <label for="name">Enter name : </label>
-    <input type="text" th:field="*{name}" id="name"/>
+    <input type="text" th:field="*{firstname}" id="name"/>
     <br>
     <label for="lastname">Enter lastname : </label>
     <input type="text" th:field="*{lastname}" id="lastname"/>

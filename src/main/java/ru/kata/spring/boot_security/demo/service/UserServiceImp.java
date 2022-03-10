@@ -60,13 +60,13 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    public User getUserByEmail(String username) {
+        return userRepository.findUserByEmail(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails user = userRepository.findUserByUsername(username);
+        UserDetails user = userRepository.findUserByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }

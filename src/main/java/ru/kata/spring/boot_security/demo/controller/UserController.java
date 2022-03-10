@@ -24,20 +24,27 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin/users")
-    public String getUsers(Model model) {
+    @GetMapping("/admin")
+    public String getUsers(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+        model.addAttribute("authUserInfo", userService.getUserByEmail(userDetails.getUsername()));
         model.addAttribute("usersInfo", userService.getAllUsers());
-        return "users";
+        model.addAttribute("roles", roleService.getAllRoles());
+        return "adminPage";
     }
 
+    @GetMapping("/user")
+    public String userGetPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        model.addAttribute("authUserInfo", userService.getUserByEmail(userDetails.getUsername()));
+        return "user";
+    }
 
     @GetMapping("/admin/users/new")
     public String newUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("roles", roleService.getAllRoles());
+
         return "new";
     }
 
-    @PostMapping("/admin/users")
+    @PostMapping("/admin")
     public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
         Set<Role> temp = new HashSet<>();
         if (inputRoles == null) {
@@ -50,13 +57,7 @@ public class UserController {
             user.setRoleSet(temp);
         }
         userService.addUser(user);
-        return "redirect:/admin/users";
-    }
-
-    @GetMapping("/admin/users/{id}")
-    public String userPage(@PathVariable("id") int id, Model model) {
-        model.addAttribute("usersInfo",userService.getUserById(id));
-        return "upage";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/users/{id}/edit")
@@ -96,15 +97,11 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/user")
-    public String userGetPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        model.addAttribute("usersInfo", userService.getUserByUsername(userDetails.getUsername()));
-        return "user";
-    }
+
 
     @GetMapping("/")
     public String indexPage() {
-        return "index";
+        return "login";
     }
 
 }

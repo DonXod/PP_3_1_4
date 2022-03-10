@@ -32,9 +32,9 @@
         </tr>
         <tr th:each="user: ${usersInfo}">
             <th th:text="${user.getId()}"/>
-            <th th:text="${user.getUsername()}"/>
+            <th th:text="${user.getEmail()}"/>
             <th th:text="${user.getPassword()}"/>
-            <th th:text="${user.getName()}"/>
+            <th th:text="${user.getFirstname()}"/>
             <th th:text="${user.getLastname()}"/>
             <th> <p th:each="r: ${user.getAuthorities()}" th:text="${r.getAuthority()}"/> </th>
             <th>

@@ -18,17 +18,20 @@ public class User implements UserDetails {
     @Column(name = "id", nullable = false, unique = true)
     private long id;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "firstname", nullable = false)
+    private String firstname;
 
     @Column(name = "lastname", nullable = false)
     private String lastname;
+
+    @Column(name = "age", nullable = false)
+    private byte age;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -47,11 +50,17 @@ public class User implements UserDetails {
         return getRoleSet();
     }
 
-    public User(String username, String password, String name, String lastname) {
-        this.username = username;
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    public User(String email, String password, String firstname, String lastname, byte age) {
+        this.email = email;
         this.password = password;
-        this.name = name;
+        this.firstname = firstname;
         this.lastname = lastname;
+        this.age = age;
     }
 
     public Set<Role> getRoleSet() {
@@ -90,14 +99,14 @@ public class User implements UserDetails {
         User user = (User) o;
 
         if (id != user.id) return false;
-        if (!username.equals(user.username)) return false;
+        if (!email.equals(user.email)) return false;
         return password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + username.hashCode();
+        result = 31 * result + email.hashCode();
         result = 31 * result + password.hashCode();
         return result;
     }
