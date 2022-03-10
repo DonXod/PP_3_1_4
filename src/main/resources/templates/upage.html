@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+</head>
+<body>
+<a href="/admin/users">Return main page</a>
+<br>
+<table>
+    <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>password</th>
+        <th>name</th>
+        <th>lastname</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    <tr th:each="user: ${usersInfo}">
+        <th th:text="${user.getId()}"/>
+        <th th:text="${user.getUsername()}"/>
+        <th th:text="${user.getPassword()}"/>
+        <th th:text="${user.getName()}"/>
+        <th th:text="${user.getLastname()}"/>
+        <th>
+            <form th:action="@{/admin/users/{id}/edit(id=${user.getId()})}">
+                <input type="submit" class="buttonEdit" value="Edit"/>
+            </form>
+        </th>
+        <th>
+            <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
+                <input type="submit" value="Remove"/>
+            </form>
+        </th>
+    </tr>
+</table>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="logout"/>
+</form>
+</body>
+</html>
