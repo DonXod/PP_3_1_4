@@ -40,7 +40,7 @@ public class UserController {
         return "user";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/add")
     public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
         Set<Role> temp = new HashSet<>();
         if (inputRoles == null) {
@@ -56,7 +56,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @PatchMapping("/admin/{id}")
+    @PatchMapping("/admin/update/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @PathVariable("id") long id,
                              @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
@@ -75,7 +75,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public String removeUser(@PathVariable("id") long id) {
         userService.removeUserById(id);
         return "redirect:/admin";
