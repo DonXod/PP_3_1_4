@@ -59,6 +59,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         return userRepository.getById(id);
     }
 
+    @Transactional
     @Override
     public User getUserByEmail(String username) {
         return userRepository.findUserByEmail(username);

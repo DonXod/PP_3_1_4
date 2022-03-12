@@ -25,23 +25,19 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String getUsers(@AuthenticationPrincipal UserDetails userDetails,Model model) {
+    public String getUsers(@AuthenticationPrincipal UserDetails userDetails, @ModelAttribute("user") User user,Model model) {
         model.addAttribute("authUserInfo", userService.getUserByEmail(userDetails.getUsername()));
         model.addAttribute("usersInfo", userService.getAllUsers());
         model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("roleAdmin", roleService.getRoleByRoleName("ROLE_ADMIN"));
         return "adminPage";
     }
 
     @GetMapping("/user")
     public String userGetPage(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("authUserInfo", userService.getUserByEmail(userDetails.getUsername()));
+        model.addAttribute("roleAdmin", roleService.getRoleByRoleName("ROLE_ADMIN"));
         return "user";
-    }
-
-    @GetMapping("/admin/users/new")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
-
-        return "new";
     }
 
     @PostMapping("/admin")
@@ -60,17 +56,11 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/users/{id}/edit")
-    public String editUser(Model model, @PathVariable("id") long id) {
-        model.addAttribute("usersInfo", userService.getUserById(id));
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "edit";
-    }
-
-    @PatchMapping("/admin/users/{id}")
+    @PatchMapping("/admin/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @PathVariable("id") long id,
                              @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
+        System.out.println("-----------------------------------------------");
         Set<Role> temp = new HashSet<>();
         if (inputRoles == null) {
             temp.add(roleService.getRoleByRoleName("ROLE_USER"));
@@ -82,22 +72,14 @@ public class UserController {
             user.setRoleSet(temp);
         }
         userService.updateUser(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
-    @GetMapping("/admin/users/clean")
-    public String clean() {
-        userService.cleanUsersTable();
-        return "redirect:/admin/users";
-    }
-
-    @DeleteMapping("/admin/users/{id}")
+    @DeleteMapping("/admin/{id}")
     public String removeUser(@PathVariable("id") long id) {
         userService.removeUserById(id);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
-
-
 
     @GetMapping("/")
     public String indexPage() {
