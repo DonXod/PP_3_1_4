@@ -60,13 +60,6 @@ public class UserController {
     public String updateUser(@ModelAttribute("user") User user,
                              @PathVariable("id") long id,
                              @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
-        System.out.println(user.getUsername());
-        System.out.println(user.getId());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
-        System.out.println(user.getAge());
-        System.out.println(user.getFirstname());
-        System.out.println(user.getLastname());
         Set<Role> temp = new HashSet<>();
         if (inputRoles == null) {
             temp.add(roleService.getRoleByRoleName("ROLE_USER"));
