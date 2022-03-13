@@ -40,7 +40,7 @@ public class UserController {
         return "user";
     }
 
-    @PostMapping("/admin/add")
+    @PostMapping("/admin")
     public String createUser(@ModelAttribute("user") User user, @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
         Set<Role> temp = new HashSet<>();
         if (inputRoles == null) {
@@ -56,11 +56,17 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @PatchMapping("/admin/update/{id}")
+    @PatchMapping("/admin/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @PathVariable("id") long id,
                              @RequestParam(value = "inputRoles", required = false) Long[] inputRoles) {
-        System.out.println("-----------------------------------------------");
+        System.out.println(user.getUsername());
+        System.out.println(user.getId());
+        System.out.println(user.getPassword());
+        System.out.println(user.getEmail());
+        System.out.println(user.getAge());
+        System.out.println(user.getFirstname());
+        System.out.println(user.getLastname());
         Set<Role> temp = new HashSet<>();
         if (inputRoles == null) {
             temp.add(roleService.getRoleByRoleName("ROLE_USER"));
@@ -75,7 +81,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping("/admin/{id}")
     public String removeUser(@PathVariable("id") long id) {
         userService.removeUserById(id);
         return "redirect:/admin";
