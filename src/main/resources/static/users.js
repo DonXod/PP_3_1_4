@@ -1,10 +1,5 @@
 let tableBodyAdmin = document.querySelector('#tableBodyAdmin')
 
-const urlUsers = 'http://localhost:8080/api/users'
-
-let modalEdit = ''
-let modalDelete = ''
-
 function showUser(user, tableBody) {
     let tr = null
     let td = null
@@ -32,6 +27,19 @@ function showUser(user, tableBody) {
     td = document.createElement('td')
     td.textContent = getRoleForUser(user)
     tr.appendChild(td)
+
+    td = document.createElement('td')
+    td.innerHTML += `
+            <button type="button" id="buttonEditModalOpen" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+    `
+    tr.appendChild(td)
+
+    td = document.createElement('td')
+    td.innerHTML += `
+            <button type="button" id="buttonDeleteModalOpen" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+    `
+    tr.appendChild(td)
+
     tableBody.appendChild(tr)
 }
 

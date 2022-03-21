@@ -6,12 +6,16 @@ const firstnameNew = document.querySelector('#firstname-new')
 const lastnameNew = document.querySelector('#lastname-new')
 const ageNew = document.querySelector('#age-new')
 
-const urlNewUser = 'http://localhost:8080/api/users'
-
 postNewUser.addEventListener('submit', (e) => {
     e.preventDefault()
-
-    fetch(urlNewUser + '?inputRoles=' + getSelectValues(inputRolesNew),{
+    let readyUrl;
+    let values = getSelectValues(inputRolesNew)
+    if(values.length == 0) {
+        readyUrl = urlNewUser
+    } else {
+        readyUrl = urlNewUser + '?inputRoles=' + values
+    }
+    fetch(readyUrl,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -54,7 +54,17 @@ public class UserRestController {
     }
 
     @PatchMapping()
-    public User updateUser(@RequestBody User user){
+    public User updateUser(@RequestBody User user, @RequestParam(value = "inputRoles", required = false) Long[] inputRoles){
+        Set<Role> temp = new HashSet<>();
+        if (inputRoles == null) {
+            temp.add(roleService.getRoleByRoleName("ROLE_USER"));
+            user.setRoleSet(temp);
+        } else {
+            for(Long i: inputRoles) {
+                temp.add(roleService.getRoleById(i));
+            }
+            user.setRoleSet(temp);
+        }
         userService.updateUser(user);
         return user;
     }
